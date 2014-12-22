@@ -1,3 +1,5 @@
+'use strict';
+
 var CONFIG = {
     database : 'offline',
     remote   : 'http://127.0.0.1:5984/'
@@ -49,7 +51,7 @@ App.prototype.remove = function (id) {
             that.fetch();
         });
     });
-};
+}
 
 App.prototype.fetch = function () {
     var that = this;
@@ -82,4 +84,18 @@ App.prototype.render = function (doc) {
     template = template.replace('{{id}}', doc._id);
     template = template.replace('{{title}}', doc.title);
     return template;    
-};
+}
+
+/*
+*   @ View
+*/
+var app = new App(CONFIG.database, CONFIG.remote);
+
+var form = document.getElementById('todo-form');
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var inp = form.querySelector('input');
+    app.create({ title : inp.value });
+    inp.value = '';
+});

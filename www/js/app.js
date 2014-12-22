@@ -64,11 +64,11 @@ App.prototype.fetch = function () {
 App.prototype.print = function (items) {
     var that = this;
     var ul = document.querySelector('#todo-list');
-    var docs = [];
+    var docs = '';
     Array.prototype.map.call(items, function (item) {
-        docs.push(that.render(item.doc));
+        docs += that.render(item.doc);
     });
-    ul.innerHTML = docs.join('');
+    ul.innerHTML = docs;
 }
 
 App.prototype.erase = function (selector) {

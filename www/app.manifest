@@ -1,9 +1,8 @@
 CACHE MANIFEST
-# Version 2014.22.12.01
 
 CACHE:
 index.html
-css/app.css
+bower_components/todomvc-common/base.css
 js/pouchdb-3.2.0.min.js
 js/app.js
 

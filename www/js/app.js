@@ -1,13 +1,15 @@
 'use strict';
 
 var CONFIG = {
-    database : 'offline',
-    remote   : 'http://127.0.0.1:5984/'
+    host     : '127.0.0.1',
+    port     : '5984',
+    database : 'offline'
 }
 
-var App = function (database, remote) {
-    this.local = new PouchDB(database);
-    this.remote = new PouchDB(remote + database);
+var App = function (config) {
+    this.config = config || CONFIG;
+    this.local = new PouchDB(this.config.database);
+    this.remote = new PouchDB(this.parseCouchDB());
     this.template
         = '<li data-id="{{id}}">'
         +   '<div class="view">'
@@ -18,6 +20,13 @@ var App = function (database, remote) {
     this.sync();
     this.fetch();
 }
+
+App.prototype.parseCouchDB = function () {
+    return 'http://' 
+        + this.config.host + ':' 
+        + this.config.port + '/' 
+        + this.config.database;
+};
 
 App.prototype.sync = function () {
     var that = this;
@@ -71,12 +80,6 @@ App.prototype.print = function (items) {
     ul.innerHTML = docs;
 }
 
-App.prototype.erase = function (selector) {
-    while (selector.hasChildNodes()) {
-        selector.removeChild(selector.firstChild);
-    }
-}
-
 App.prototype.render = function (doc) {
     var that = this;
     var template = that.template;
@@ -89,7 +92,7 @@ App.prototype.render = function (doc) {
 /*
 *   @ View
 */
-var app = new App(CONFIG.database, CONFIG.remote);
+var app = new App();
 
 var form = document.getElementById('todo-form');
 

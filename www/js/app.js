@@ -6,7 +6,7 @@ var CONFIG = {
     database : 'offline'
 }
 
-var App = function (config) {
+function App (config) {
     this.config = config || CONFIG;
     this.local = new PouchDB(this.config.database);
     this.remote = new PouchDB(this.parseCouchDB());

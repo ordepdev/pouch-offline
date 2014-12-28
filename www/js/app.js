@@ -102,3 +102,7 @@ form.addEventListener('submit', function (e) {
     app.create({ title : inp.value });
     inp.value = '';
 });
+
+window.addEventListener('online', function () {
+    app.sync();
+});
